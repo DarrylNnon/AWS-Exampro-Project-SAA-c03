@@ -1,0 +1,22 @@
+#! /bin/bash
+# Modify this to have a prompt or take an argument
+
+# Taking an argument
+if [ -z "$1"]; then
+    echo "Kindly provide a bucket name as an argument to the command"
+    exit 1
+fi
+
+BUCKET_NAME=$1
+
+echo "Creating bucket..."
+
+# Create a bucket in another Region apart from us-east-1
+aws s3api create-bucket --bucket $BUCKET_NAME --create-bucket-configuration="LocationConstraint=ca-central-1"
+
+# This create a bucket in us-east-1 by default
+aws s3api create-bucket --bucket $BUCKET_NAME
+
+aws s3api create-bucket --bucket $BUCKET_NAME --create-bucket-configuration="LocationConstraint=ca-central-1" --query Location --output text
+
+echo "Bucket created"
