@@ -1,0 +1,25 @@
+#! /bin/bash
+
+set -e 
+
+# Taking an argument
+if [ -z "$1"]; then
+    echo "Kindly provide a bucket name as an argument to the command"
+    exit 1
+fi
+
+# Taking an argument 2
+if [ -z "$2"]; then
+    echo "Kindly provide a bucket name as an argument to the command"
+    exit 1
+fi
+
+BUCKET_NAME=$1
+FILENAME=$2
+
+OBJECT_KEY=$(basename "$FILENAME")
+
+aws s3api put-object \
+--bucket $BUCKET_NAME \
+--body $FILENAME \
+--key $OBJECT_KEY

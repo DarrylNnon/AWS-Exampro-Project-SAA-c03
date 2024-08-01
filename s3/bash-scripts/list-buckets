@@ -1,0 +1,7 @@
+#! /bin/bash
+echo "List of Most Recent Buckets" 
+#This line list all the buckets in our S3 storage
+# aws s3api list-buckets 
+
+#Using the JQ command
+aws s3api list-buckets | jq -r '.Buckets | sort_by(.CreationDate) | reverse | .[0:5] | .[] | .Name'
